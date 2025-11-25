@@ -1,0 +1,82 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="StewartPlatformPi.MainWindow"
+        Title="Stewart Platform Pi"
+        Height="600" Width="1000"
+        Background="#222">
+
+	<Grid ColumnDefinitions="350, *">
+
+		<ScrollViewer Grid.Column="0"
+                      VerticalScrollBarVisibility="Auto"
+                      Background="#F0F0F0"
+                      TextElement.Foreground="Black">
+
+			<StackPanel Margin="10">
+
+				<Border BorderBrush="Gray" BorderThickness="1" Margin="0,0,0,10" Padding="5" Background="White">
+					<StackPanel>
+						<TextBlock Text="Hardware Connection" FontWeight="Bold" Margin="0,0,0,5"/>
+
+						<ComboBox x:Name="PortSelector" Margin="0,0,0,10" HorizontalAlignment="Stretch" PlaceholderText="Select Port..."/>
+
+						<StackPanel Orientation="Horizontal" Spacing="10" Margin="0,0,0,10">
+							<Button x:Name="BtnConnect" Content="Connect" Width="100" HorizontalContentAlignment="Center" Click="BtnConnect_Click"/>
+							<Button x:Name="BtnReset" Content="Reset" Width="100" HorizontalContentAlignment="Center" Click="BtnReset_Click" Background="#FFDDDD"/>
+						</StackPanel>
+
+						<TextBlock x:Name="TxtStatus" Text="Disconnected" FontWeight="Bold" Foreground="Red"/>
+					</StackPanel>
+				</Border>
+
+				<Border BorderBrush="Gray" BorderThickness="1" Margin="0,0,0,10" Padding="5" Background="White">
+					<StackPanel>
+						<TextBlock Text="Position (mm)" FontWeight="Bold" Margin="0,0,0,5"/>
+
+						<TextBlock Text="X Translation"/>
+						<Slider x:Name="SldPosX" Minimum="-35" Maximum="35" PropertyChanged="Slider_ValueChanged"/>
+
+						<TextBlock Text="Y Translation"/>
+						<Slider x:Name="SldPosY" Minimum="-35" Maximum="35" PropertyChanged="Slider_ValueChanged"/>
+
+						<TextBlock Text="Z Translation"/>
+						<Slider x:Name="SldPosZ" Minimum="-35" Maximum="35" PropertyChanged="Slider_ValueChanged"/>
+					</StackPanel>
+				</Border>
+
+				<Border BorderBrush="Gray" BorderThickness="1" Margin="0,0,0,10" Padding="5" Background="White">
+					<StackPanel>
+						<TextBlock Text="Rotation (Deg)" FontWeight="Bold" Margin="0,0,0,5"/>
+
+						<TextBlock Text="Roll (X)"/>
+						<Slider x:Name="SldRotX" Minimum="-30" Maximum="30" PropertyChanged="Slider_ValueChanged"/>
+
+						<TextBlock Text="Pitch (Y)"/>
+						<Slider x:Name="SldRotY" Minimum="-30" Maximum="30" PropertyChanged="Slider_ValueChanged"/>
+
+						<TextBlock Text="Yaw (Z)"/>
+						<Slider x:Name="SldRotZ" Minimum="-30" Maximum="30" PropertyChanged="Slider_ValueChanged"/>
+					</StackPanel>
+				</Border>
+
+				<Border BorderBrush="Gray" BorderThickness="1" Padding="5" Background="White">
+					<StackPanel>
+						<TextBlock Text="Servo Data" FontWeight="Bold" Margin="0,0,0,5"/>
+						<TextBlock x:Name="TxtServo0" Text="S0: 0.00"/>
+						<TextBlock x:Name="TxtServo1" Text="S1: 0.00"/>
+						<TextBlock x:Name="TxtServo2" Text="S2: 0.00"/>
+						<TextBlock x:Name="TxtServo3" Text="S3: 0.00"/>
+						<TextBlock x:Name="TxtServo4" Text="S4: 0.00"/>
+						<TextBlock x:Name="TxtServo5" Text="S5: 0.00"/>
+					</StackPanel>
+				</Border>
+			</StackPanel>
+		</ScrollViewer>
+
+		<Border Grid.Column="1" Background="#333" ClipToBounds="True">
+			<Canvas x:Name="ViewCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+				<TextBlock Text="Visualization (Simulated 3D)" Foreground="Gray" Margin="10"/>
+			</Canvas>
+		</Border>
+	</Grid>
+</Window>
