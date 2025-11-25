@@ -136,6 +136,18 @@ namespace StewartPlatformPi
             TxtServo3.Text = $"S3: {platform.GetAlphaDegree(3):F2}°";
             TxtServo4.Text = $"S4: {platform.GetAlphaDegree(4):F2}°";
             TxtServo5.Text = $"S5: {platform.GetAlphaDegree(5):F2}°";
+
+            // Show warning on the status label if out of range
+            if (platform.IsOutOfRange)
+            {
+                TxtStatus.Text = "LIMIT REACHED";
+                TxtStatus.Foreground = Brushes.Magenta;
+            }
+            else if (arduinoPort != null && arduinoPort.IsOpen)
+            {
+                TxtStatus.Text = "Connected";
+                TxtStatus.Foreground = Brushes.Green;
+            }
         }
 
         private void BtnConnect_Click(object? sender, RoutedEventArgs e)
