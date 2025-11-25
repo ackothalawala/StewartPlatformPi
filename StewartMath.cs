@@ -5,47 +5,44 @@ namespace StewartPlatformPi
 {
     public class StewartPlatform
     {
-        // --- PHYSICAL CONSTANTS (Updated from details.pdf) ---
+        // --- PHYSICAL CONSTANTS ---
 
-        // BASE ANGLES (Uniformly spaced at 0, 60, 120...) 
+        // 1. BASE ANGLES (Uniform 0, 60, 120...) [cite: 23]
         private readonly double[] BASE_ANGLES = {
             0, 60, 120, 180, 240, 300
         };
 
-        // PLATFORM ANGLES (Paired sectors) 
-        // Mapped to the closest Base Angle:
-        // Servo 0 (0°)   -> Platform 345° (-15°)
-        // Servo 1 (60°)  -> Platform 75°
-        // Servo 2 (120°) -> Platform 105°
-        // Servo 3 (180°) -> Platform 195°
-        // Servo 4 (240°) -> Platform 225°
-        // Servo 5 (300°) -> Platform 315°
+        // 2. PLATFORM ANGLES (Paired) [cite: 31]
+        // Mapped to closest Base Angle (0 connects to 345, 60 connects to 75, etc.)
         private readonly double[] PLATFORM_ANGLES = {
             345, 75, 105, 195, 225, 315
         };
 
-        // BETA ANGLES: The orientation of the servo arm rotation plane.
-        // We assume each servo arm rotates perpendicular to the radius (Tangent).
-        // The Arduino code handles the +/- direction flip for odd/even servos.
+        // 3. BETA ANGLES (Servo Arm Orientation)
+        // FIX: We use a "Mirrored" layout. 
+        // Even servos (0,2,4) face +90 deg relative to radius.
+        // Odd servos (1,3,5) face -90 deg relative to radius.
+        // This aligns with your Arduino code which inverts Odd servo signals.
         private readonly double[] BETA = {
-            Math.PI / 2,        // 0° + 90°
-            5 * Math.PI / 6,    // 60° + 90° (150°)
-            7 * Math.PI / 6,    // 120° + 90° (210°)
-            3 * Math.PI / 2,    // 180° + 90° (270°)
-            11 * Math.PI / 6,   // 240° + 90° (330°)
-            Math.PI / 6         // 300° + 90° (30°)
+            Math.PI / 2,           // 0 + 90 = 90
+            -Math.PI / 6,          // 60 - 90 = -30 (330)
+            7 * Math.PI / 6,       // 120 + 90 = 210
+            Math.PI / 2,           // 180 - 90 = 90
+            11 * Math.PI / 6,      // 240 + 90 = 330 (-30)
+            7 * Math.PI / 6        // 300 - 90 = 210
         };
 
-        // Dimensions (mm)
-        public const float BASE_RADIUS = 86f;      // 
-        public const float PLATFORM_RADIUS = 50f;  // 
-        public const float HORN_LENGTH = 27.845f;  // 
-        public const float ROD_LENGTH = 110f;      // 
+        // 4. DIMENSIONS (mm) [cite: 22, 30, 25, 34]
+        public const float BASE_RADIUS = 86f;
+        public const float PLATFORM_RADIUS = 50f;
+        public const float HORN_LENGTH = 27.845f;
+        public const float ROD_LENGTH = 110f;
 
-        // Calculated Initial Height (approximate home position)
-        // h0 = Sqrt(Rod^2 - (BaseRad - PlatRad)^2)
-        // h0 = Sqrt(110^2 - (86 - 50)^2) = ~104mm
-        private const float INITIAL_HEIGHT = 104.0f;
+        // 5. INITIAL HEIGHT (Home Z)
+        // Calculated to ensure arms are roughly horizontal at start.
+        // If servos jump UP on connect, INCREASE this.
+        // If servos jump DOWN on connect, DECREASE this.
+        private const float INITIAL_HEIGHT = 95.0f;
 
         // 3D DRAWING POINTS
         public Vector3[] BasePoints { get; private set; } = new Vector3[6];
