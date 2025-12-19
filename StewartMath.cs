@@ -16,11 +16,11 @@ namespace StewartPlatformPi
         };
 
         // Dimensions (mm)
-        public const float BASE_RADIUS = 86f;
-        public const float PLATFORM_RADIUS = 50f;
-        public const float HORN_LENGTH = 27.845f;
-        public const float ROD_LENGTH = 110f;
-        private const float INITIAL_HEIGHT = 112.0f;
+        public const float BASE_RADIUS = 300f;
+        public const float PLATFORM_RADIUS = 270f;
+        public const float HORN_LENGTH = 38.0f;
+        public const float ROD_LENGTH = 213.485f;
+        private const float INITIAL_HEIGHT = 180.0f;
 
         // Public Data
         public Vector3[] BasePoints { get; private set; } = new Vector3[6];
